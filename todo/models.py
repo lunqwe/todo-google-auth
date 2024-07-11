@@ -8,7 +8,7 @@ class Todo(models.Model):
         on_delete=models.CASCADE
     )
     title = models.CharField(max_length=255)
-    description = models.Charfield(max_length=255)
+    description = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     due_date = models.DateTimeField()
     completed = models.BooleanField(default=False)
