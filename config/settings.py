@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     
     #local apps
+    'todo',
 ]
 
 SITE_ID = 1
