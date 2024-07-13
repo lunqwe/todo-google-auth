@@ -46,6 +46,10 @@ class TodoListView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_class = TodoFilter
     
+    def get_queryset(self):
+        user = User.objects.get(id=self.request.user.id)
+        return Todo.objects.filter(owner=self.request.user).order_by('created_at')
+    
 class UpdateTodoView(generics.UpdateAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
