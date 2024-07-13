@@ -14,7 +14,7 @@ from .permissions import IsOwner
 from .filters import TodoFilter
 from accounts.models import User
 
-def test_goole_auth(request):
+def test_google_auth(request):
     return render(request, 'test.html')
 
 

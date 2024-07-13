@@ -21,6 +21,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 from accounts.views import confirm_password_view
+from todo.views import test_google_auth
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -43,6 +44,7 @@ urlpatterns = [
     path('api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify', TokenVerifyView.as_view(), name='token_verify'),
     path('api/todo/', include('todo.urls'), name='todo'),
+    path('google-auth-test/', test_google_auth, name='google_auth_test'),
     path('reset-password-confirm/<uidb64>/<token>/', confirm_password_view, name='confirm-password-view'),
     # autodoc 
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

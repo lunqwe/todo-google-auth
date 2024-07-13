@@ -1,9 +1,8 @@
 from django.urls import path
 
-from .views import test, CreateTodoView, RetrieveTodoView, TodoListView, UpdateTodoView, DeleteTodoView
+from .views import CreateTodoView, RetrieveTodoView, TodoListView, UpdateTodoView, DeleteTodoView
 
 urlpatterns = [
-    path('test', test, name='test'),
     path('create/', CreateTodoView.as_view(), name='create_todo'),
     path('get/<int:pk>', RetrieveTodoView.as_view(), name='retrieve-todo'),
     path('list/', TodoListView.as_view(), name='list-todo-view'),
