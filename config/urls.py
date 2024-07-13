@@ -21,6 +21,21 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 from accounts.views import confirm_password_view
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+# autodoc setup 
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Task API",
+        default_version='v1',
+        description="API description",
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +43,9 @@ urlpatterns = [
     path('api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify', TokenVerifyView.as_view(), name='token_verify'),
     path('api/todo/', include('todo.urls'), name='todo'),
-    path('reset-password-confirm/<uidb64>/<token>/', confirm_password_view, name='confirm-password-view')
+    path('reset-password-confirm/<uidb64>/<token>/', confirm_password_view, name='confirm-password-view'),
+    # autodoc 
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     
 ]
