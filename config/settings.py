@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 from decouple import AutoConfig
 from datetime import timedelta
+from celery.schedules import crontab
+
 
 config = AutoConfig()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -44,13 +46,14 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     
     #side apps 
-    "corsheaders",
+    'drf_yasg',
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
-    
+    'django_filters',
     
     #local apps
     'todo',
@@ -58,11 +61,11 @@ INSTALLED_APPS = [
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # e.g., 'smtp.gmail.com' for Gmail
-EMAIL_PORT = 587  # This is the default port for TLS
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'roma.boyko10068@gmail.com'
-EMAIL_HOST_PASSWORD = 'jbgyupkmzbntwhvp'
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_TEMPLATE_NAME = 'password_reset_email.html'
 
 SITE_ID = 1
@@ -76,17 +79,14 @@ SITE_NAME = 'zapply-test-site'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTStatelessUserAuthentication', # simplejwt
-    )
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 25,
 }
 
 REST_AUTH = {
     'PASSWORD_RESET_SERIALIZER': 'accounts.serializers.PasswordResetSerializer',
 }
-
-SITE_ID = 1
-
-DOMAIN = 'localhost:8000'
-SITE_NAME = 'zapply-test-site'
 
 
 # simplejwt
@@ -147,6 +147,21 @@ SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
 
 
+CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
+CELERY_BEAT_SCHEDULE = {
+    'send-due-date-reminders': {
+        'task': 'todo.tasks.send_due_date_reminder',
+        'schedule': crontab(minute='*/30'),
+    },
+}
+
+
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
@@ -168,13 +183,27 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# local db
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+# docker db
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mydatabase',
+        'USER': 'myuser',
+        'PASSWORD': 'mypassword',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 
