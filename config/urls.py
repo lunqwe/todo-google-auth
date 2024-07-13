@@ -16,11 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework_simplejwt.views import (
+    TokenRefreshView,
+    TokenVerifyView,
+)
+from accounts.views import confirm_password_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #allauth 
-    path('api/auth/', include('dj_rest_auth.urls')),
-    path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
-    path('api/social/', include('allauth.socialaccount.urls')),
+    path("api/auth/", include('accounts.urls'), name="google_login"),
+    path('api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/verify', TokenVerifyView.as_view(), name='token_verify'),
+    path('api/todo/', include('todo.urls'), name='todo'),
+    path('reset-password-confirm/<uidb64>/<token>/', confirm_password_view, name='confirm-password-view')
+    
 ]
