@@ -104,7 +104,7 @@ I made this decision for several reasons:
 2. **Flexibility**: With this library, I created code that can be easily modified and adapted
 to fit the project needs.
 
-Additionally, I used several views from django-rest-auth.
+Additionally, I used several views from dj_rest_auth.
 
 **Google Authorization**:
 
