@@ -45,26 +45,26 @@ To install dependencies, use ths command:
 	3. Comment docker db 
 	
 4. **Create migrations:**
-To make sure all migrations are there, use this command:
-```
-python manage.py makemigrations
-```
-Then use this command to apply migrations into your local project:
-```
-python manage.py migrate
-```
-4. **Run server**
-   
-To run server:
-```
-python manage.py runserver
-```
-5. **Tests**
-   
-To run tests:
-```
-python manage.py test
-```
+	To make sure all migrations are there, use this command:
+	```
+	python manage.py makemigrations
+	```
+	Then use this command to apply migrations into your local project:
+	```
+	python manage.py migrate
+	```
+	4. **Run server**
+	   
+	To run server:
+	```
+	python manage.py runserver
+	```
+	5. **Tests**
+	   
+	To run tests:
+	```
+	python manage.py test
+	```
 
 5. **API Documentation:**
 
