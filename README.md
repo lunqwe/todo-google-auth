@@ -54,20 +54,24 @@ Then use this command to apply migrations into your local project:
 python manage.py migrate
 ```
 4. **Run server**
+   
 To run server:
 ```
 python manage.py runserver
 ```
 5. **Tests**
+   
 To run tests:
 ```
 python manage.py test
 ```
 
 5. **API Documentation:**
+
    - API documentation can be accessed via [localhost:8000/swagger/](http://localhost:8000/swagger/) (for local server)
 
-6. **Google auth setup**
+7. **Google auth setup**
+
 To setup your own google auth, create your client_id and secret (https://console.cloud.google.com/apis/), then go to .env file inside config directory and replace cilent_id and secret.
 
 **Example**
@@ -86,13 +90,13 @@ An example of how authorization via Google works can be found at this link (when
 http://localhost:8000/google-auth-test/
 
 ##Dev notes
-####Discontinuation of django-allauth:
+###Discontinuation of django-allauth:
 django-allauth works well only with Django, so I opted for django-rest-auth,
 which handled both Google authentication and regular authentication quite well. However, due to recent updates
 in Google's authentication methods, it no longer meets the required functionalities. That's why I decided to implement my own
 authentication functionality (described below).
 
-####I have implemented authorization using djangorestframework-simplejwt.
+###I have implemented authorization using djangorestframework-simplejwt.
 I made this decision for several reasons:
 1. **Ease of use**: drf-simplejwt is very convenient and easy to use.
 2. **Flexibility**: With this library, I created code that can be easily modified and adapted
@@ -100,17 +104,17 @@ to fit the project needs.
 
 Additionally, I used several views from django-rest-auth.
 
-####Google Authorization:
+###Google Authorization:
 Due to recent updates from Google, the django-rest-auth library, unfortunately,
 is not functional (its built-in serializer requires access_token, code, and id_token, whereas in the new version of Google authentication, the API only provides id_token).
 That's why I decided to create my own view function (GoogleAuthView), which works successfully in my project in conjunction with simple-jwt (another reason to use drf-simplejwt :) ).
 
 In addition, I implemented some JavaScript logic to test the functionality of my endpoint, as I mentioned above
 
-####Celery:
+###Celery:
 I thought it would be cool if users received a notification some time before their Todo deadline, so I added Celery.
 
-####PostgreSQL instead of SQLite:
+###PostgreSQL instead of SQLite:
 I decided that adding PostgreSQL to my project would be great :)
 
 Docker & docker-compose:
