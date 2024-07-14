@@ -119,7 +119,6 @@ class UpdateTodoViewTest(TestCase):
         url = reverse('update-todo-view', kwargs={'pk': self.todo1.pk})
         data = {'title': 'Updated Test Todo 1', 'description': 'Updated description 1', 'owner':1, 'due_date': '2024-09-09:14-00'}
         response = self.client.put(url, data)
-        print(response.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.todo1.refresh_from_db()
         self.assertEqual(self.todo1.title, 'Updated Test Todo 1')
