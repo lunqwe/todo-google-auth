@@ -30,7 +30,6 @@ class CreateUserView(generics.CreateAPIView):
                         'status': 'success',
                         'detail': "User registered successfully!",
                         'tokens': jwt_tokens
-                        # "token": token.key
                     })
 
         except serializers.ValidationError as e:
@@ -40,11 +39,6 @@ class CreateUserView(generics.CreateAPIView):
                 }
             return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
         
-        except ConnectionRefusedError as e:
-            data = {
-                'detail': e.detail
-            }
-            return Response(data=data, status=status.HTTP_403_FORBIDDEN)
 
 # login view 
 class LoginUserView(generics.GenericAPIView):
@@ -152,6 +146,12 @@ class GoogleLoginView(generics.GenericAPIView):
                 'detail': error_detail(e)
                 }
             return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
+        
+        except ConnectionRefusedError as e:
+            data = {
+                'detail': e
+            }
+            return Response(data=data, status=status.HTTP_403_FORBIDDEN)
         
 
     
