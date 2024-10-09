@@ -2,6 +2,11 @@
 
 The project implements the Todo management system. Also there is an ability to login using Google authentication. 
 
+## Project Description
+
+My project implements a todo task management system. Here you can do CRUD operations with todos.
+The key feature of this project is my own realization of JWT. The reason is that django_allauth didn`t provide some flexibility I needed for this project.
+Authentication system has been implemented using JWT + dj_rest_auth, and an authentication system through Google has also been implemented using its API.
 
 ## Instructions (to launch using Docker)
 
@@ -80,14 +85,6 @@ cilent_id='your_client_id'
 secret='your_client_secret'
 ...
 ```
-## Project Description
-
-My project implements a todo task management system. Here you can do CRUD operations with todos.
-The key feature of this project is my own realization of JWT. The reason is that django_allauth didn`t provide some flexibility I needed for this project.
-Authentication system has been implemented using JWT + dj_rest_auth, and an authentication system through Google has also been implemented using its API.
-
-An example of how authorization via Google works can be found at this link (when the server is running locally):
-http://localhost:8000/google-auth-test/
 
 
 
