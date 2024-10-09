@@ -1,8 +1,7 @@
-# Test task for Zapply AI
+# Todo application
 
-The project implements the Todo management system. 
+The project implements the Todo management system. Also there is an ability to login using Google authentication. 
 
-*Note: I submitted a .env file in addition to my project.*
 
 ## Instructions (to launch using Docker)
 
@@ -83,51 +82,12 @@ secret='your_client_secret'
 ```
 ## Project Description
 
-My project implements a todo task management system.
-Also, a user authentication system has been implemented using JWT + dj_rest_auth, and an authentication system through Google has also been implemented using its API.
+My project implements a todo task management system. Here you can do CRUD operations with todos.
+The key feature of this project is my own realization of JWT. The reason is that django_allauth didn`t provide some flexibility I needed for this project.
+Authentication system has been implemented using JWT + dj_rest_auth, and an authentication system through Google has also been implemented using its API.
 
 An example of how authorization via Google works can be found at this link (when the server is running locally):
 http://localhost:8000/google-auth-test/
 
-##Dev notes
-**Discontinuation of django-allauth**:
 
-django-allauth works well only with Django, so I opted for django-rest-auth,
-which handled both Google authentication and regular authentication quite well. However, due to recent updates
-in Google's authentication methods, it no longer meets the required functionalities. That's why I decided to implement my own
-authentication functionality (described below).
-
-**Authorization using djangorestframework-simplejwt**.
-
-I made this decision for several reasons:
-1. **Ease of use**: drf-simplejwt is very convenient and easy to use.
-2. **Flexibility**: With this library, I created code that can be easily modified and adapted
-to fit the project needs.
-
-Additionally, I used several views from dj_rest_auth.
-
-**Google Authorization**:
-
-Due to recent updates from Google, the django-rest-auth library, unfortunately,
-is not functional (its built-in serializer requires access_token, code, and id_token, whereas in the new version of Google authentication, the API only provides id_token).
-That's why I decided to create my own view function (GoogleAuthView), which works successfully in my project in conjunction with simple-jwt (another reason to use drf-simplejwt :) ).
-
-In addition, I implemented some JavaScript logic to test the functionality of my endpoint, as I mentioned above
-
-**Celery**:
-
-I thought it would be cool if users received a notification some time before their Todo deadline, so I added Celery.
-
-**PostgreSQL instead of SQLite**:
-
-I decided that adding PostgreSQL to my project would be great :)
-
-**Docker & docker-compose**:
-
-I thought it would be a good practice to include these tools in my project.
-
-**Swagger**:
-
-I added swagger and redoc to my project to better understand its structure (using
-the drf-yasg library).
 
